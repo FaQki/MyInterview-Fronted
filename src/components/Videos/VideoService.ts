@@ -14,7 +14,7 @@ export const createVideos = async (video: Video) => {
     return await axios.post(`${api}/videos`, video)
     
 }
-
+ 
 export const getVideo = async (id: string) => {
 
     return await axios.get<Video>(`${api}/videos/${id}`)

@@ -41,6 +41,11 @@ export const Navbar = () => {
               </Link>
             </li>
             <li className="nav-item">
+              <Link className="nav-link px-2 text-white" to="/userlist">
+                Usuarios
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link className="nav-link px-2 text-white" to="/videos">
                 Mis videos
               </Link>
@@ -59,7 +64,15 @@ export const Navbar = () => {
             >
               <FontAwesomeIcon icon={darkMode ? faSun : faMoon} />
             </button>
-            <button className="btn btn-primary">Registrase</button>
+            <Link to={"/userform"}>
+              <button className="btn btn-primary me-2">Registrarse</button>
+            </Link>
+          </div>
+
+          <div className="text-end">
+            <Link to={"/login"}>
+              <button className="btn btn-primary">Iniciar sesion</button>
+            </Link>
           </div>
         </div>
       </div>
