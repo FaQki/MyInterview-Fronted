@@ -1,18 +1,25 @@
 import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { User } from "./User";
 import * as UserService from "./UserService";
 import { toast } from "react-toastify";
 import axios from 'axios'
+import linkedinIcon from '../assets/signin-button.png';
 
 type InputChange = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
 export const UserForm = () => {
+
+  const handleLinkedInLogin = () => {
+    window.location.href = 'http://localhost:3000/auth/signin/linkedin'; // Redirige a la ruta de inicio de sesión en tu API
+  };
+
   const navigate = useNavigate();
   const params = useParams<{ id: string }>();
 
   const [user, setUser] = useState<User>({
-    username: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
@@ -59,8 +66,8 @@ export const UserForm = () => {
 
   const getUser = async (id: string) => {
     const res = await UserService.getOneUser(id);
-    const { username, email, password, roles } = res.data;
-    setUser({ ...user, username, email, password, roles });
+    const { firstName, lastName, email, password, roles } = res.data;
+    setUser({ ...user, firstName, lastName, email, password, roles });
   };
 
   useEffect(() => {
@@ -74,17 +81,32 @@ export const UserForm = () => {
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
-            Nombre y apellido
+            Nombre
           </label>
           <input
             type="text"
             className="form-control"
-            id="username"
-            name="username"
+            id="firstName"
+            name="firstName"
             onChange={handleInputChange}
-            value={user.username}
-            placeholder="Ingrese nombre y apellido"
+            value={user.firstName}
+            placeholder="Ingrese su nombre"
             autoFocus
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="exampleInputEmail1" className="form-label">
+            Apellido
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="lastName"
+            name="lastName"
+            onChange={handleInputChange}
+            value={user.lastName}
+            placeholder="Ingrese su apellido"
             required
           />
         </div>
@@ -150,6 +172,43 @@ export const UserForm = () => {
         <button type="submit" className="btn btn-primary">
           Registrarse
         </button>
+        <br></br>
+        <br/>
+        <label htmlFor="exampleInputPassword1" className="form-label" style={{
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}}>
+  O Ingresa con LinkedIn
+</label>
+<div>
+<div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+}}>
+  <button
+    onClick={handleLinkedInLogin}
+    style={{
+      background: `url(${linkedinIcon}) no-repeat center`,
+      backgroundSize: 'cover',
+      width: '198px',
+      height: '36px',
+      border: 'none',
+      padding: 0,
+      cursor: 'pointer',
+      transition: 'transform 0.3s',
+    }}
+    onMouseOver={(e) => {
+      e.currentTarget.style.transform = 'scale(1.1)';
+    }}
+    onMouseOut={(e) => {
+      e.currentTarget.style.transform = 'scale(1)';
+    }}
+  ></button>
+</div>
+</div>
+
       </form>
     </div>
   );

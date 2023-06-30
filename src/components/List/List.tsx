@@ -4,6 +4,7 @@ import { User } from '../User/User';
 
 function List() {
   const [users, setUsers] = useState<User[]>([]);
+  const [loadingUsers, setLoadingUsers] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
   const loadUsers = async () => {
@@ -11,6 +12,7 @@ function List() {
       const res = await UserService.getUsers();
       if (Array.isArray(res.data)) {
         setUsers(res.data);
+        setLoadingUsers(false);
       } else {
         console.error('Invalid response format');
       }
@@ -28,7 +30,7 @@ function List() {
   };
 
   const filteredUsers = users.filter((user) =>
-    user.username.toLowerCase().includes(searchTerm.toLowerCase())
+    user.firstName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -44,25 +46,37 @@ function List() {
           />
           <button className="btn btn-primary">Buscar</button>
         </div>
-        {/* Other sidebar content */}
       </div>
       <div className="d-flex flex-wrap">
-        {filteredUsers.map((user) => (
-          <div key={user._id} className="card m-2" style={{ width: '18rem' }}>
-            <img
-              src="/perfil.png"
-              className="card-img-top"
-              alt="User"
-            />
-            <div className="card-body">
-              <h5 className="card-title">{user.username}</h5>
-              <p className="card-text">{user.email}</p>
-              <a href="#" className="btn btn-primary">
-                Ingresar a su perfil
-              </a>
+        {loadingUsers ? (
+          <div className="spinner-overlay">
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Loading...</span>
             </div>
           </div>
-        ))}
+        ) : (
+          filteredUsers.map((user) => (
+            <div key={user._id} className="card m-2" style={{ width: '18rem' }}>
+              <div className="image-container">
+                <img
+                  src="/perfil.png"
+                  className="card-img-top"
+                  alt="User"
+                  onLoad={() => {
+                    setLoadingUsers(false);
+                  }}
+                />
+              </div>
+              <div className="card-body">
+                <h5 className="card-title">{user.firstName} {user.lastName}</h5>
+                <p className="card-text">{user.email}</p>
+                <a href="#" className="btn btn-primary">
+                  Ingresar a su perfil
+                </a>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

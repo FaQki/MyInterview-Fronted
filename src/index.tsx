@@ -12,12 +12,14 @@ import {Home} from './components/Home'
 import { Navbar } from './components/Header/Header';
 import {ToastContainer} from 'react-toastify'
 
+
 import 'bootswatch/dist/lux/bootstrap.min.css'
 import './index.css'
 import 'react-toastify/dist/ReactToastify.css';
 import { UserForm } from './components/User/Userform';
 import Sidebar from './components/List/List';
 import login from './components/User/Login';
+import Loginlinkedin from './components/User/Loginlinkedin'
 
 
 
@@ -38,6 +40,8 @@ root.render(
     <Route path='/userform' Component={UserForm} />
     <Route path='/userlist' Component={Sidebar} />
     <Route path='/login' Component={login} />
+    <Route path="/login/linkedin" Component={Loginlinkedin} />
+    
   </Routes>
   <ToastContainer />
   <Footer/>

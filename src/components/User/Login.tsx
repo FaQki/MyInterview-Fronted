@@ -2,10 +2,17 @@ import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import linkedinIcon from '../assets/signin-button.png';
+
 
 type InputChange = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
 export const Login = () => {
+
+  const handleLinkedInLogin = () => {
+    window.location.href = 'http://localhost:3000/auth/signin/linkedin'; // Redirige a la ruta de inicio de sesión en tu API
+  };
+
   const navigate = useNavigate();
   
   const [credentials, setCredentials] = useState({
@@ -84,6 +91,49 @@ export const Login = () => {
       <button type="submit" className="btn btn-primary">
         Iniciar sesión
       </button>
+      <br></br>
+      <br/>
+      <div>
+      <p className="pb-2 border-bottom text-center fs-1">
+          <strong></strong>
+        </p>
+      </div>
+      <label htmlFor="exampleInputPassword1" className="form-label" style={{
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}}>
+  O Ingresa con LinkedIn
+</label>
+<div>
+  <div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+}}>
+  <button
+    onClick={handleLinkedInLogin}
+    style={{
+      background: `url(${linkedinIcon}) no-repeat center`,
+      backgroundSize: 'cover',
+      width: '198px',
+      height: '36px',
+      border: 'none',
+      padding: 0,
+      cursor: 'pointer',
+      transition: 'transform 0.3s',
+    }}
+    onMouseOver={(e) => {
+      e.currentTarget.style.transform = 'scale(1.1)';
+    }}
+    onMouseOut={(e) => {
+      e.currentTarget.style.transform = 'scale(1)';
+    }}
+  ></button>
+</div>
+</div>
+
+
     </form>
   );
 };

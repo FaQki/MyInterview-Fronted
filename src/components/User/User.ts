@@ -2,7 +2,8 @@ import { Schema, Types } from "mongoose";
 
 export interface User {
   createdAt?: string;
-  username: string;
+  firstName: string;
+  lastName: string;
   email: string;
   updatedAt?: string;
   password: string;

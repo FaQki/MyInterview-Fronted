@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Video } from "./Video";
 import ReactPlayer from "react-player";
 import { useNavigate } from "react-router-dom";
@@ -11,26 +11,44 @@ interface Props {
 }
 
 const VideoItem = ({ video, loadVideos }: Props) => {
+  const [loading, setLoading] = useState(true);
+
   const handleDelete = (id: string) => {
     VideoService.deleteVideo(id);
     toast.error("El video fue borrado correctamente");
     loadVideos();
-  
   };
 
   const navigate = useNavigate();
+
+  const handlePlayerReady = () => {
+    setLoading(false);
+  };
 
   return (
     <div className="card mb-3">
       <div className="row g-0">
         <div className="col-md-4">
           <div
-            style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}
+            className="video-container"
+            style={{
+              position: "relative",
+              paddingBottom: "56.25%",
+              height: 0,
+            }}
           >
+            {loading && (
+              <div className="spinner-overlay">
+                <div className="spinner-border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            )}
             <ReactPlayer
               className="position-absolute top-0 start-0 w-100 h-100"
               url={video.url}
               style={{ objectFit: "cover" }}
+              onReady={handlePlayerReady}
             />
           </div>
         </div>
