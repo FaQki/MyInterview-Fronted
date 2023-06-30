@@ -130,14 +130,14 @@ export const UserForm = () => {
           </div>
         </div>
         <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
+          <label htmlFor="exampleInputPassword" className="form-label">
             Contraseña
           </label>
           <input
             type="password"
             name="password"
             className="form-control"
-            id="exampleInputPassword1"
+            id="exampleInputPassword"
             onChange={handleInputChange}
             value={user.password}
             placeholder="Ingrese su contraseña"

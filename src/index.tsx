@@ -19,7 +19,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { UserForm } from './components/User/Userform';
 import Sidebar from './components/List/List';
 import login from './components/User/Login';
-import Loginlinkedin from './components/User/Loginlinkedin'
+
+import {UserProfile} from './components/User/UserProfile'
+import LinkedInSignIn from './components/User/LinkedInSignIn';
+import LinkedInSignUp from './components/User/LinkedInSignUp';
 
 
 
@@ -40,7 +43,9 @@ root.render(
     <Route path='/userform' Component={UserForm} />
     <Route path='/userlist' Component={Sidebar} />
     <Route path='/login' Component={login} />
-    <Route path="/login/linkedin" Component={Loginlinkedin} />
+    <Route path="/auth/linkedin/callback" Component={LinkedInSignIn} />
+    <Route path="/auth/linkedin" Component={LinkedInSignUp} />
+    <Route path="/userprofile/:id" Component={UserProfile} />
     
   </Routes>
   <ToastContainer />

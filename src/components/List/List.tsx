@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import * as UserService from '../User/UserService';
-import { User } from '../User/User';
+import React, { useState, useEffect } from "react";
+import * as UserService from "../User/UserService";
+import { User } from "../User/User";
+import { Link } from "react-router-dom";
+import defaultProfilePicture from "../assets/perfil.png";
 
 function List() {
   const [users, setUsers] = useState<User[]>([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const loadUsers = async () => {
     try {
@@ -14,10 +16,10 @@ function List() {
         setUsers(res.data);
         setLoadingUsers(false);
       } else {
-        console.error('Invalid response format');
+        console.error("Invalid response format");
       }
     } catch (error) {
-      console.error('Error loading users:', error);
+      console.error("Error loading users:", error);
     }
   };
 
@@ -56,23 +58,30 @@ function List() {
           </div>
         ) : (
           filteredUsers.map((user) => (
-            <div key={user._id} className="card m-2" style={{ width: '18rem' }}>
-              <div className="image-container">
-                <img
-                  src="/perfil.png"
-                  className="card-img-top"
-                  alt="User"
-                  onLoad={() => {
-                    setLoadingUsers(false);
-                  }}
-                />
+            <div key={user._id} className="card m-2" style={{ width: "18rem" }}>
+              <div className="col-md-4">
+                <div className="image-container">
+                  <img
+                    src={user?.profilePicture || defaultProfilePicture}
+                    className="card-img-top"
+                    alt="User"
+                    onLoad={() => {
+                      setLoadingUsers(false);
+                    }}
+                    style={{ width: "300px", height: "auto" }}
+                  />
+                </div>
               </div>
               <div className="card-body">
-                <h5 className="card-title">{user.firstName} {user.lastName}</h5>
+                <h5 className="card-title">
+                  {user.firstName} {user.lastName}
+                </h5>
                 <p className="card-text">{user.email}</p>
-                <a href="#" className="btn btn-primary">
-                  Ingresar a su perfil
-                </a>
+                <Link to={`/userprofile/${user._id}`}>
+                  <a href="#" className="btn btn-primary">
+                    Ingresar a su perfil
+                  </a>
+                </Link>
               </div>
             </div>
           ))

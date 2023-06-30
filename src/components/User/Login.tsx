@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import linkedinIcon from '../assets/signin-button.png';
@@ -9,9 +9,7 @@ type InputChange = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
 export const Login = () => {
 
-  const handleLinkedInLogin = () => {
-    window.location.href = 'http://localhost:3000/auth/signin/linkedin'; // Redirige a la ruta de inicio de sesión en tu API
-  };
+
 
   const navigate = useNavigate();
   
@@ -111,8 +109,10 @@ export const Login = () => {
   justifyContent: 'center',
   alignItems: 'center',
 }}>
+  <Link to={'/auth/linkedin'}>
   <button
-    onClick={handleLinkedInLogin}
+    
+    type="button"
     style={{
       background: `url(${linkedinIcon}) no-repeat center`,
       backgroundSize: 'cover',
@@ -130,6 +130,7 @@ export const Login = () => {
       e.currentTarget.style.transform = 'scale(1)';
     }}
   ></button>
+  </Link>
 </div>
 </div>
 
